@@ -3,7 +3,6 @@
 // Created by Stantech Guru
 // ==========================
 
-
 // ==========================
 // CANVAS
 // ==========================
@@ -12,7 +11,6 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 var CELL = 20;
-
 
 // ==========================
 // GAME VARIABLES
@@ -34,7 +32,7 @@ var coins = 0;
 var level = 1;
 
 var highScore =
-    Number(localStorage.getItem("stanguruHighScore")) || 0;
+Number(localStorage.getItem("stanguruHighScore")) || 0;
 
 var missionProgress = 0;
 var missionTarget = 10;
@@ -44,7 +42,6 @@ var paused = false;
 var countingDown = false;
 
 var achievedNewHighScore = false;
-
 
 // ==========================
 // TIMERS
@@ -56,7 +53,6 @@ var countdownTimer = null;
 var specialFoodSpawnTimer = null;
 var specialFoodLifeTimer = null;
 
-
 // ==========================
 // SOUND
 // ==========================
@@ -64,17 +60,16 @@ var specialFoodLifeTimer = null;
 var soundOn = true;
 
 var letsGoSound =
-    new Audio("stanguru sound/letsgo.mp3");
+new Audio("stanguru sound/letsgo.mp3");
 
 var yummySound =
-    new Audio("stanguru sound/yummy.mp3");
+new Audio("stanguru sound/yummy.mp3");
 
 var newHighScoreSound =
-    new Audio("stanguru sound/newhighscore.mp3");
+new Audio("stanguru sound/newhighscore.mp3");
 
 var gameOverSound =
-    new Audio("stanguru sound/gameover.mp3");
-
+new Audio("stanguru sound/gameover.mp3");
 
 // Preload sounds
 letsGoSound.preload = "auto";
@@ -82,90 +77,48 @@ yummySound.preload = "auto";
 newHighScoreSound.preload = "auto";
 gameOverSound.preload = "auto";
 
-
-// // ==========================
-// UNLOCK AUDIO FOR BROWSER
-// ==========================
-
-function unlockAudio() {
-
-    try {
-
-        letsGoSound.muted = true;
-
-        var audioPromise = letsGoSound.play();
-
-        if (audioPromise !== undefined) {
-
-            audioPromise.then(function() {
-
-                letsGoSound.pause();
-
-                letsGoSound.currentTime = 0;
-
-                letsGoSound.muted = false;
-
-            }).catch(function(error) {
-
-                console.log("Audio unlock:", error);
-
-            });
-
-        }
-
-    } catch (error) {
-
-        console.log("Audio unlock error:", error);
-
-    }
-
-}
-}
-
-
 // ==========================
 // HTML ELEMENTS
 // ==========================
 
 var startScreen =
-    document.getElementById("startScreen");
+document.getElementById("startScreen");
 
 var gameScreen =
-    document.getElementById("gameScreen");
+document.getElementById("gameScreen");
 
 var gameOverMenu =
-    document.getElementById("gameOverMenu");
+document.getElementById("gameOverMenu");
 
 var scoreText =
-    document.getElementById("score");
+document.getElementById("score");
 
 var highScoreText =
-    document.getElementById("highScore");
+document.getElementById("highScore");
 
 var coinsText =
-    document.getElementById("coins");
+document.getElementById("coins");
 
 var levelText =
-    document.getElementById("level");
+document.getElementById("level");
 
 var missionText =
-    document.getElementById("missionText");
+document.getElementById("missionText");
 
 var missionProgressText =
-    document.getElementById("missionProgress");
+document.getElementById("missionProgress");
 
 var achievementList =
-    document.getElementById("achievementList");
+document.getElementById("achievementList");
 
 var finalScore =
-    document.getElementById("finalScore");
+document.getElementById("finalScore");
 
 var finalHighScore =
-    document.getElementById("finalHighScore");
+document.getElementById("finalHighScore");
 
 var highScoreMessage =
-    document.getElementById("highScoreMessage");
-
+document.getElementById("highScoreMessage");
 
 // ==========================
 // SOUND FUNCTION
@@ -173,42 +126,41 @@ var highScoreMessage =
 
 function playSound(sound) {
 
-    if (!soundOn) {
-        return;
-    }
+if (!soundOn) {  
+    return;  
+}  
 
-    try {
+try {  
 
-        sound.pause();
+    sound.pause();  
 
-        sound.currentTime = 0;
+    sound.currentTime = 0;  
 
-        var result = sound.play();
+    var result = sound.play();  
 
-        if (result !== undefined) {
+    if (result !== undefined) {  
 
-            result.catch(function(error) {
+        result.catch(function(error) {  
 
-                console.log(
-                    "Audio playback error:",
-                    error
-                );
+            console.log(  
+                "Audio playback error:",  
+                error  
+            );  
 
-            });
+        });  
 
-        }
+    }  
 
-    } catch (error) {
+} catch (error) {  
 
-        console.log(
-            "Sound error:",
-            error
-        );
-
-    }
+    console.log(  
+        "Sound error:",  
+        error  
+    );  
 
 }
 
+}
 
 // ==========================
 // STOP ALL SOUNDS
@@ -216,36 +168,35 @@ function playSound(sound) {
 
 function stopAllSounds() {
 
-    var sounds = [
-        letsGoSound,
-        yummySound,
-        newHighScoreSound,
-        gameOverSound
-    ];
+var sounds = [  
+    letsGoSound,  
+    yummySound,  
+    newHighScoreSound,  
+    gameOverSound  
+];  
 
 
-    for (
-        var i = 0;
-        i < sounds.length;
-        i++
-    ) {
+for (  
+    var i = 0;  
+    i < sounds.length;  
+    i++  
+) {  
 
-        try {
+    try {  
 
-            sounds[i].pause();
+        sounds[i].pause();  
 
-            sounds[i].currentTime = 0;
+        sounds[i].currentTime = 0;  
 
-        } catch (error) {
+    } catch (error) {  
 
-            console.log(error);
+        console.log(error);  
 
-        }
-
-    }
+    }  
 
 }
 
+}
 
 // ==========================
 // CREATE SNAKE
@@ -253,27 +204,26 @@ function stopAllSounds() {
 
 function createSnake() {
 
-    snake = [
+snake = [  
 
-        {
-            x: 5,
-            y: 5
-        },
+    {  
+        x: 5,  
+        y: 5  
+    },  
 
-        {
-            x: 4,
-            y: 5
-        },
+    {  
+        x: 4,  
+        y: 5  
+    },  
 
-        {
-            x: 3,
-            y: 5
-        }
+    {  
+        x: 3,  
+        y: 5  
+    }  
 
-    ];
+];
 
 }
-
 
 // ==========================
 // CHECK OCCUPIED POSITION
@@ -281,46 +231,45 @@ function createSnake() {
 
 function occupiedBySnakeOrObstacle(x, y) {
 
-    for (
-        var i = 0;
-        i < snake.length;
-        i++
-    ) {
+for (  
+    var i = 0;  
+    i < snake.length;  
+    i++  
+) {  
 
-        if (
-            snake[i].x === x &&
-            snake[i].y === y
-        ) {
+    if (  
+        snake[i].x === x &&  
+        snake[i].y === y  
+    ) {  
 
-            return true;
+        return true;  
 
-        }
+    }  
 
-    }
-
-
-    for (
-        var j = 0;
-        j < obstacles.length;
-        j++
-    ) {
-
-        if (
-            obstacles[j].x === x &&
-            obstacles[j].y === y
-        ) {
-
-            return true;
-
-        }
-
-    }
+}  
 
 
-    return false;
+for (  
+    var j = 0;  
+    j < obstacles.length;  
+    j++  
+) {  
+
+    if (  
+        obstacles[j].x === x &&  
+        obstacles[j].y === y  
+    ) {  
+
+        return true;  
+
+    }  
+
+}  
+
+
+return false;
 
 }
-
 
 // ==========================
 // CREATE FOOD
@@ -328,54 +277,53 @@ function occupiedBySnakeOrObstacle(x, y) {
 
 function createFood() {
 
-    var position;
+var position;  
 
-    do {
+do {  
 
-        position = {
+    position = {  
 
-            x:
-                Math.floor(
-                    Math.random() * 18
-                ) + 1,
+        x:  
+            Math.floor(  
+                Math.random() * 18  
+            ) + 1,  
 
-            y:
-                Math.floor(
-                    Math.random() * 18
-                ) + 1
+        y:  
+            Math.floor(  
+                Math.random() * 18  
+            ) + 1  
 
-        };
+    };  
 
-    } while (
+} while (  
 
-        occupiedBySnakeOrObstacle(
-            position.x,
-            position.y
-        )
+    occupiedBySnakeOrObstacle(  
+        position.x,  
+        position.y  
+    )  
 
-        ||
+    ||  
 
-        (
-            coin &&
-            position.x === coin.x &&
-            position.y === coin.y
-        )
+    (  
+        coin &&  
+        position.x === coin.x &&  
+        position.y === coin.y  
+    )  
 
-        ||
+    ||  
 
-        (
-            specialFood &&
-            position.x === specialFood.x &&
-            position.y === specialFood.y
-        )
+    (  
+        specialFood &&  
+        position.x === specialFood.x &&  
+        position.y === specialFood.y  
+    )  
 
-    );
+);  
 
 
-    food = position;
+food = position;
 
 }
-
 
 // ==========================
 // CREATE COIN
@@ -383,54 +331,53 @@ function createFood() {
 
 function createCoin() {
 
-    var position;
+var position;  
 
-    do {
+do {  
 
-        position = {
+    position = {  
 
-            x:
-                Math.floor(
-                    Math.random() * 18
-                ) + 1,
+        x:  
+            Math.floor(  
+                Math.random() * 18  
+            ) + 1,  
 
-            y:
-                Math.floor(
-                    Math.random() * 18
-                ) + 1
+        y:  
+            Math.floor(  
+                Math.random() * 18  
+            ) + 1  
 
-        };
+    };  
 
-    } while (
+} while (  
 
-        occupiedBySnakeOrObstacle(
-            position.x,
-            position.y
-        )
+    occupiedBySnakeOrObstacle(  
+        position.x,  
+        position.y  
+    )  
 
-        ||
+    ||  
 
-        (
-            food &&
-            position.x === food.x &&
-            position.y === food.y
-        )
+    (  
+        food &&  
+        position.x === food.x &&  
+        position.y === food.y  
+    )  
 
-        ||
+    ||  
 
-        (
-            specialFood &&
-            position.x === specialFood.x &&
-            position.y === specialFood.y
-        )
+    (  
+        specialFood &&  
+        position.x === specialFood.x &&  
+        position.y === specialFood.y  
+    )  
 
-    );
+);  
 
 
-    coin = position;
+coin = position;
 
 }
-
 
 // ==========================
 // CREATE SPECIAL FOOD
@@ -438,77 +385,76 @@ function createCoin() {
 
 function createSpecialFood() {
 
-    var position;
+var position;  
 
-    do {
+do {  
 
-        position = {
+    position = {  
 
-            x:
-                Math.floor(
-                    Math.random() * 18
-                ) + 1,
+        x:  
+            Math.floor(  
+                Math.random() * 18  
+            ) + 1,  
 
-            y:
-                Math.floor(
-                    Math.random() * 18
-                ) + 1
+        y:  
+            Math.floor(  
+                Math.random() * 18  
+            ) + 1  
 
-        };
+    };  
 
-    } while (
+} while (  
 
-        occupiedBySnakeOrObstacle(
-            position.x,
-            position.y
-        )
+    occupiedBySnakeOrObstacle(  
+        position.x,  
+        position.y  
+    )  
 
-        ||
+    ||  
 
-        (
-            food &&
-            position.x === food.x &&
-            position.y === food.y
-        )
+    (  
+        food &&  
+        position.x === food.x &&  
+        position.y === food.y  
+    )  
 
-        ||
+    ||  
 
-        (
-            coin &&
-            position.x === coin.x &&
-            position.y === coin.y
-        )
+    (  
+        coin &&  
+        position.x === coin.x &&  
+        position.y === coin.y  
+    )  
 
-    );
-
-
-    specialFood = position;
+);  
 
 
-    clearTimeout(
-        specialFoodLifeTimer
-    );
+specialFood = position;  
 
 
-    specialFoodLifeTimer =
-        setTimeout(
-            function() {
-
-                specialFood = null;
-
-                draw();
-
-                startSpecialFoodTimer();
-
-            },
-            5000
-        );
+clearTimeout(  
+    specialFoodLifeTimer  
+);  
 
 
-    draw();
+specialFoodLifeTimer =  
+    setTimeout(  
+        function() {  
+
+            specialFood = null;  
+
+            draw();  
+
+            startSpecialFoodTimer();  
+
+        },  
+        5000  
+    );  
+
+
+draw();
 
 }
-
 
 // ==========================
 // SPECIAL FOOD TIMER
@@ -516,35 +462,34 @@ function createSpecialFood() {
 
 function startSpecialFoodTimer() {
 
-    clearTimeout(
-        specialFoodSpawnTimer
+clearTimeout(  
+    specialFoodSpawnTimer  
+);  
+
+
+specialFoodSpawnTimer =  
+    setTimeout(  
+        function() {  
+
+            if (  
+                !gameOver &&  
+                !paused &&  
+                !countingDown  
+            ) {  
+
+                createSpecialFood();  
+
+            } else {  
+
+                startSpecialFoodTimer();  
+
+            }  
+
+        },  
+        5000  
     );
 
-
-    specialFoodSpawnTimer =
-        setTimeout(
-            function() {
-
-                if (
-                    !gameOver &&
-                    !paused &&
-                    !countingDown
-                ) {
-
-                    createSpecialFood();
-
-                } else {
-
-                    startSpecialFoodTimer();
-
-                }
-
-            },
-            5000
-        );
-
 }
-
 
 // ==========================
 // STOP SPECIAL FOOD TIMER
@@ -552,22 +497,21 @@ function startSpecialFoodTimer() {
 
 function stopSpecialFoodTimer() {
 
-    clearTimeout(
-        specialFoodSpawnTimer
-    );
+clearTimeout(  
+    specialFoodSpawnTimer  
+);  
 
-    clearTimeout(
-        specialFoodLifeTimer
-    );
+clearTimeout(  
+    specialFoodLifeTimer  
+);  
 
 
-    specialFoodSpawnTimer = null;
-    specialFoodLifeTimer = null;
+specialFoodSpawnTimer = null;  
+specialFoodLifeTimer = null;  
 
-    specialFood = null;
+specialFood = null;
 
 }
-
 
 // ==========================
 // CREATE OBSTACLES
@@ -575,90 +519,89 @@ function stopSpecialFoodTimer() {
 
 function createObstacles() {
 
-    obstacles = [];
+obstacles = [];  
 
 
-    var amount =
-        Math.min(
-            level - 1,
-            8
-        );
+var amount =  
+    Math.min(  
+        level - 1,  
+        8  
+    );  
 
 
-    for (
-        var i = 0;
-        i < amount;
-        i++
-    ) {
+for (  
+    var i = 0;  
+    i < amount;  
+    i++  
+) {  
 
-        var position;
+    var position;  
 
-        var attempts = 0;
-
-
-        do {
-
-            position = {
-
-                x:
-                    Math.floor(
-                        Math.random() * 18
-                    ) + 1,
-
-                y:
-                    Math.floor(
-                        Math.random() * 18
-                    ) + 1
-
-            };
+    var attempts = 0;  
 
 
-            attempts++;
+    do {  
 
-        } while (
+        position = {  
 
-            occupiedBySnakeOrObstacle(
-                position.x,
-                position.y
-            )
+            x:  
+                Math.floor(  
+                    Math.random() * 18  
+                ) + 1,  
 
-            ||
+            y:  
+                Math.floor(  
+                    Math.random() * 18  
+                ) + 1  
 
-            (
-                food &&
-                position.x === food.x &&
-                position.y === food.y
-            )
-
-            ||
-
-            (
-                coin &&
-                position.x === coin.x &&
-                position.y === coin.y
-            )
-
-            ||
-
-            (
-                specialFood &&
-                position.x === specialFood.x &&
-                position.y === specialFood.y
-            )
-
-        );
+        };  
 
 
-        if (attempts < 100) {
+        attempts++;  
 
-            obstacles.push(position);
+    } while (  
 
-        }
+        occupiedBySnakeOrObstacle(  
+            position.x,  
+            position.y  
+        )  
 
-    }
+        ||  
+
+        (  
+            food &&  
+            position.x === food.x &&  
+            position.y === food.y  
+        )  
+
+        ||  
+
+        (  
+            coin &&  
+            position.x === coin.x &&  
+            position.y === coin.y  
+        )  
+
+        ||  
+
+        (  
+            specialFood &&  
+            position.x === specialFood.x &&  
+            position.y === specialFood.y  
+        )  
+
+    );  
+
+
+    if (attempts < 100) {  
+
+        obstacles.push(position);  
+
+    }  
 
 }
 
+}
 
 // ==========================
 // DRAW
@@ -666,286 +609,285 @@ function createObstacles() {
 
 function draw() {
 
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+ctx.clearRect(  
+    0,  
+    0,  
+    canvas.width,  
+    canvas.height  
+);  
 
 
-    // Background
+// Background  
 
-    ctx.fillStyle = "#f5f5f5";
+ctx.fillStyle = "#f5f5f5";  
 
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+ctx.fillRect(  
+    0,  
+    0,  
+    canvas.width,  
+    canvas.height  
+);  
 
 
-    // ==========================
-    // FOOD
-    // ==========================
+// ==========================  
+// FOOD  
+// ==========================  
 
-    if (food) {
+if (food) {  
 
-        ctx.fillStyle = "red";
+    ctx.fillStyle = "red";  
 
-        ctx.beginPath();
+    ctx.beginPath();  
 
-        ctx.arc(
-            food.x * CELL + CELL / 2,
-            food.y * CELL + CELL / 2,
-            7,
-            0,
-            Math.PI * 2
-        );
+    ctx.arc(  
+        food.x * CELL + CELL / 2,  
+        food.y * CELL + CELL / 2,  
+        7,  
+        0,  
+        Math.PI * 2  
+    );  
 
-        ctx.fill();
+    ctx.fill();  
 
-    }
+}  
 
 
-    // ==========================
-    // COIN
-    // ==========================
+// ==========================  
+// COIN  
+// ==========================  
 
-    if (coin) {
+if (coin) {  
 
-        ctx.fillStyle = "gold";
+    ctx.fillStyle = "gold";  
 
-        ctx.beginPath();
+    ctx.beginPath();  
 
-        ctx.arc(
-            coin.x * CELL + CELL / 2,
-            coin.y * CELL + CELL / 2,
-            7,
-            0,
-            Math.PI * 2
-        );
+    ctx.arc(  
+        coin.x * CELL + CELL / 2,  
+        coin.y * CELL + CELL / 2,  
+        7,  
+        0,  
+        Math.PI * 2  
+    );  
 
-        ctx.fill();
+    ctx.fill();  
 
 
-        ctx.strokeStyle = "orange";
+    ctx.strokeStyle = "orange";  
 
-        ctx.lineWidth = 2;
+    ctx.lineWidth = 2;  
 
-        ctx.stroke();
+    ctx.stroke();  
 
-    }
+}  
 
 
-    // ==========================
-    // SPECIAL FOOD
-    // ==========================
+// ==========================  
+// SPECIAL FOOD  
+// ==========================  
 
-    if (specialFood) {
+if (specialFood) {  
 
-        var diamondX =
-            specialFood.x * CELL + CELL / 2;
+    var diamondX =  
+        specialFood.x * CELL + CELL / 2;  
 
-        var diamondY =
-            specialFood.y * CELL + CELL / 2;
+    var diamondY =  
+        specialFood.y * CELL + CELL / 2;  
 
 
-        ctx.fillStyle = "purple";
+    ctx.fillStyle = "purple";  
 
-        ctx.beginPath();
+    ctx.beginPath();  
 
-        ctx.moveTo(
-            diamondX,
-            diamondY - 8
-        );
+    ctx.moveTo(  
+        diamondX,  
+        diamondY - 8  
+    );  
 
-        ctx.lineTo(
-            diamondX + 8,
-            diamondY
-        );
+    ctx.lineTo(  
+        diamondX + 8,  
+        diamondY  
+    );  
 
-        ctx.lineTo(
-            diamondX,
-            diamondY + 8
-        );
+    ctx.lineTo(  
+        diamondX,  
+        diamondY + 8  
+    );  
 
-        ctx.lineTo(
-            diamondX - 8,
-            diamondY
-        );
+    ctx.lineTo(  
+        diamondX - 8,  
+        diamondY  
+    );  
 
-        ctx.closePath();
+    ctx.closePath();  
 
-        ctx.fill();
+    ctx.fill();  
 
 
-        ctx.strokeStyle = "violet";
+    ctx.strokeStyle = "violet";  
 
-        ctx.lineWidth = 2;
+    ctx.lineWidth = 2;  
 
-        ctx.stroke();
+    ctx.stroke();  
 
-    }
+}  
 
 
-    // ==========================
-    // OBSTACLES
-    // ==========================
+// ==========================  
+// OBSTACLES  
+// ==========================  
 
-    for (
-        var i = 0;
-        i < obstacles.length;
-        i++
-    ) {
+for (  
+    var i = 0;  
+    i < obstacles.length;  
+    i++  
+) {  
 
-        ctx.fillStyle = "black";
+    ctx.fillStyle = "black";  
 
-        ctx.fillRect(
-            obstacles[i].x * CELL,
-            obstacles[i].y * CELL,
-            CELL,
-            CELL
-        );
+    ctx.fillRect(  
+        obstacles[i].x * CELL,  
+        obstacles[i].y * CELL,  
+        CELL,  
+        CELL  
+    );  
 
-    }
+}  
 
 
-    // ==========================
-    // SNAKE
-    // ==========================
+// ==========================  
+// SNAKE  
+// ==========================  
 
-    for (
-        var s = 0;
-        s < snake.length;
-        s++
-    ) {
+for (  
+    var s = 0;  
+    s < snake.length;  
+    s++  
+) {  
 
-        var part = snake[s];
+    var part = snake[s];  
 
 
-        if (s === 0) {
+    if (s === 0) {  
 
-            ctx.fillStyle = "green";
+        ctx.fillStyle = "green";  
 
-        } else {
+    } else {  
 
-            ctx.fillStyle = "limegreen";
+        ctx.fillStyle = "limegreen";  
 
-        }
+    }  
 
 
-        ctx.fillRect(
-            part.x * CELL,
-            part.y * CELL,
-            CELL,
-            CELL
-        );
+    ctx.fillRect(  
+        part.x * CELL,  
+        part.y * CELL,  
+        CELL,  
+        CELL  
+    );  
 
 
-        ctx.strokeStyle = "darkgreen";
+    ctx.strokeStyle = "darkgreen";  
 
-        ctx.lineWidth = 1;
+    ctx.lineWidth = 1;  
 
-        ctx.strokeRect(
-            part.x * CELL,
-            part.y * CELL,
-            CELL,
-            CELL
-        );
+    ctx.strokeRect(  
+        part.x * CELL,  
+        part.y * CELL,  
+        CELL,  
+        CELL  
+    );  
 
 
-        // ==========================
-        // SNAKE EYES
-        // ==========================
+    // ==========================  
+    // SNAKE EYES  
+    // ==========================  
 
-        if (s === 0) {
+    if (s === 0) {  
 
-            ctx.fillStyle = "white";
+        ctx.fillStyle = "white";  
 
 
-            if (direction === "right") {
+        if (direction === "right") {  
 
-                ctx.fillRect(
-                    part.x * CELL + 13,
-                    part.y * CELL + 4,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 13,  
+                part.y * CELL + 4,  
+                4,  
+                4  
+            );  
 
-                ctx.fillRect(
-                    part.x * CELL + 13,
-                    part.y * CELL + 12,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 13,  
+                part.y * CELL + 12,  
+                4,  
+                4  
+            );  
 
-            }
+        }  
 
 
-            else if (direction === "left") {
+        else if (direction === "left") {  
 
-                ctx.fillRect(
-                    part.x * CELL + 3,
-                    part.y * CELL + 4,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 3,  
+                part.y * CELL + 4,  
+                4,  
+                4  
+            );  
 
-                ctx.fillRect(
-                    part.x * CELL + 3,
-                    part.y * CELL + 12,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 3,  
+                part.y * CELL + 12,  
+                4,  
+                4  
+            );  
 
-            }
+        }  
 
 
-            else if (direction === "up") {
+        else if (direction === "up") {  
 
-                ctx.fillRect(
-                    part.x * CELL + 4,
-                    part.y * CELL + 3,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 4,  
+                part.y * CELL + 3,  
+                4,  
+                4  
+            );  
 
-                ctx.fillRect(
-                    part.x * CELL + 12,
-                    part.y * CELL + 3,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 12,  
+                part.y * CELL + 3,  
+                4,  
+                4  
+            );  
 
-            }
+        }  
 
 
-            else {
+        else {  
 
-                ctx.fillRect(
-                    part.x * CELL + 4,
-                    part.y * CELL + 13,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 4,  
+                part.y * CELL + 13,  
+                4,  
+                4  
+            );  
 
-                ctx.fillRect(
-                    part.x * CELL + 12,
-                    part.y * CELL + 13,
-                    4,
-                    4
-                );
+            ctx.fillRect(  
+                part.x * CELL + 12,  
+                part.y * CELL + 13,  
+                4,  
+                4  
+            );  
 
-            }
+        }  
 
-        }
-
-    }
+    }  
 
 }
 
+}
 
 // ==========================
 // MOVE SNAKE
@@ -953,276 +895,275 @@ function draw() {
 
 function moveSnake() {
 
-    if (
-        gameOver ||
-        paused ||
-        countingDown
-    ) {
+if (  
+    gameOver ||  
+    paused ||  
+    countingDown  
+) {  
 
-        return;
+    return;  
 
-    }
+}  
 
 
-    direction = nextDirection;
+direction = nextDirection;  
 
 
-    var head = {
+var head = {  
 
-        x: snake[0].x,
-        y: snake[0].y
+    x: snake[0].x,  
+    y: snake[0].y  
 
-    };
+};  
 
 
-    // ==========================
-    // MOVE
-    // ==========================
+// ==========================  
+// MOVE  
+// ==========================  
 
-    if (direction === "right") {
-        head.x++;
-    }
+if (direction === "right") {  
+    head.x++;  
+}  
 
-    else if (direction === "left") {
-        head.x--;
-    }
+else if (direction === "left") {  
+    head.x--;  
+}  
 
-    else if (direction === "up") {
-        head.y--;
-    }
+else if (direction === "up") {  
+    head.y--;  
+}  
 
-    else if (direction === "down") {
-        head.y++;
-    }
+else if (direction === "down") {  
+    head.y++;  
+}  
 
 
-    // ==========================
-    // WALL WRAP
-    // ==========================
+// ==========================  
+// WALL WRAP  
+// ==========================  
 
-    if (head.x > 18) {
-        head.x = 1;
-    }
+if (head.x > 18) {  
+    head.x = 1;  
+}  
 
-    if (head.x < 1) {
-        head.x = 18;
-    }
+if (head.x < 1) {  
+    head.x = 18;  
+}  
 
-    if (head.y > 18) {
-        head.y = 1;
-    }
+if (head.y > 18) {  
+    head.y = 1;  
+}  
 
-    if (head.y < 1) {
-        head.y = 18;
-    }
+if (head.y < 1) {  
+    head.y = 18;  
+}  
 
 
-    // ==========================
-    // SELF COLLISION
-    // ==========================
+// ==========================  
+// SELF COLLISION  
+// ==========================  
 
-    for (
-        var i = 0;
-        i < snake.length;
-        i++
-    ) {
+for (  
+    var i = 0;  
+    i < snake.length;  
+    i++  
+) {  
 
-        if (
-            head.x === snake[i].x &&
-            head.y === snake[i].y
-        ) {
+    if (  
+        head.x === snake[i].x &&  
+        head.y === snake[i].y  
+    ) {  
 
-            endGame();
+        endGame();  
 
-            return;
+        return;  
 
-        }
+    }  
 
-    }
+}  
 
 
-    // ==========================
-    // OBSTACLE COLLISION
-    // ==========================
+// ==========================  
+// OBSTACLE COLLISION  
+// ==========================  
 
-    for (
-        var o = 0;
-        o < obstacles.length;
-        o++
-    ) {
+for (  
+    var o = 0;  
+    o < obstacles.length;  
+    o++  
+) {  
 
-        if (
-            head.x === obstacles[o].x &&
-            head.y === obstacles[o].y
-        ) {
+    if (  
+        head.x === obstacles[o].x &&  
+        head.y === obstacles[o].y  
+    ) {  
 
-            endGame();
+        endGame();  
 
-            return;
+        return;  
 
-        }
+    }  
 
-    }
+}  
 
 
-    // ==========================
-    // ADD HEAD
-    // ==========================
+// ==========================  
+// ADD HEAD  
+// ==========================  
 
-    snake.unshift(head);
+snake.unshift(head);  
 
 
-    var ateSomething = false;
+var ateSomething = false;  
 
 
-    // ==========================
-    // NORMAL FOOD
-    // ==========================
+// ==========================  
+// NORMAL FOOD  
+// ==========================  
 
-    if (
-        food &&
-        head.x === food.x &&
-        head.y === food.y
-    ) {
+if (  
+    food &&  
+    head.x === food.x &&  
+    head.y === food.y  
+) {  
 
-        score++;
+    score++;  
 
-        missionProgress++;
+    missionProgress++;  
 
-        ateSomething = true;
+    ateSomething = true;  
 
 
-        playSound(yummySound);
+    playSound(yummySound);  
 
 
-        createFood();
+    createFood();  
 
 
-        if (
-            missionProgress >= missionTarget
-        ) {
+    if (  
+        missionProgress >= missionTarget  
+    ) {  
 
-            missionProgress = 0;
+        missionProgress = 0;  
 
-            missionTarget += 10;
+        missionTarget += 10;  
 
-        }
+    }  
 
-    }
+}  
 
 
-    // ==========================
-    // COIN
-    // ==========================
+// ==========================  
+// COIN  
+// ==========================  
 
-    if (
-        coin &&
-        head.x === coin.x &&
-        head.y === coin.y
-    ) {
+if (  
+    coin &&  
+    head.x === coin.x &&  
+    head.y === coin.y  
+) {  
 
-        coins += 5;
+    coins += 5;  
 
-        playSound(yummySound);
+    playSound(yummySound);  
 
-        createCoin();
+    createCoin();  
 
-    }
+}  
 
 
-    // ==========================
-    // SPECIAL FOOD
-    // ==========================
+// ==========================  
+// SPECIAL FOOD  
+// ==========================  
 
-    if (
-        specialFood &&
-        head.x === specialFood.x &&
-        head.y === specialFood.y
-    ) {
+if (  
+    specialFood &&  
+    head.x === specialFood.x &&  
+    head.y === specialFood.y  
+) {  
 
-        score += 10;
+    score += 10;  
 
-        ateSomething = true;
+    ateSomething = true;  
 
 
-        playSound(yummySound);
+    playSound(yummySound);  
 
 
-        clearTimeout(
-            specialFoodLifeTimer
-        );
+    clearTimeout(  
+        specialFoodLifeTimer  
+    );  
 
 
-        specialFood = null;
+    specialFood = null;  
 
 
-        startSpecialFoodTimer();
+    startSpecialFoodTimer();  
 
-    }
+}  
 
 
-    // ==========================
-    // REMOVE TAIL
-    // ==========================
+// ==========================  
+// REMOVE TAIL  
+// ==========================  
 
-    if (!ateSomething) {
+if (!ateSomething) {  
 
-        snake.pop();
+    snake.pop();  
 
-    }
+}  
 
 
-    // ==========================
-    // LEVEL
-    // ==========================
+// ==========================  
+// LEVEL  
+// ==========================  
 
-    var newLevel =
-        Math.floor(score / 10) + 1;
+var newLevel =  
+    Math.floor(score / 10) + 1;  
 
 
-    if (newLevel !== level) {
+if (newLevel !== level) {  
 
-        level = newLevel;
+    level = newLevel;  
 
-        createObstacles();
+    createObstacles();  
 
-    }
+}  
 
 
-    // ==========================
-    // HIGH SCORE
-    // ==========================
+// ==========================  
+// HIGH SCORE  
+// ==========================  
 
-    if (score > highScore) {
+if (score > highScore) {  
 
-        highScore = score;
+    highScore = score;  
 
 
-        localStorage.setItem(
-            "stanguruHighScore",
-            highScore
-        );
+    localStorage.setItem(  
+        "stanguruHighScore",  
+        highScore  
+    );  
 
 
-        if (!achievedNewHighScore) {
+    if (!achievedNewHighScore) {  
 
-            achievedNewHighScore = true;
+        achievedNewHighScore = true;  
 
-            playSound(
-                newHighScoreSound
-            );
+        playSound(  
+            newHighScoreSound  
+        );  
 
-        }
+    }  
 
-    }
+}  
 
 
-    updateDisplay();
+updateDisplay();  
 
-    draw();
+draw();
 
 }
-
 
 // ==========================
 // GAME TIMER
@@ -1230,24 +1171,23 @@ function moveSnake() {
 
 function restartTimer() {
 
-    clearInterval(gameTimer);
+clearInterval(gameTimer);  
 
 
-    var speed =
-        Math.max(
-            80,
-            200 - ((level - 1) * 15)
-        );
+var speed =  
+    Math.max(  
+        80,  
+        200 - ((level - 1) * 15)  
+    );  
 
 
-    gameTimer =
-        setInterval(
-            moveSnake,
-            speed
-        );
+gameTimer =  
+    setInterval(  
+        moveSnake,  
+        speed  
+    );
 
 }
-
 
 // ==========================
 // COUNTDOWN
@@ -1255,100 +1195,99 @@ function restartTimer() {
 
 function startCountdown() {
 
-    clearInterval(gameTimer);
+clearInterval(gameTimer);  
 
-    clearInterval(countdownTimer);
-
-
-    countingDown = true;
+clearInterval(countdownTimer);  
 
 
-    var count = 3;
+countingDown = true;  
 
 
-    function showCountdown() {
-
-        draw();
+var count = 3;  
 
 
-        ctx.fillStyle =
-            "rgba(0,0,0,0.45)";
+function showCountdown() {  
+
+    draw();  
 
 
-        ctx.fillRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
+    ctx.fillStyle =  
+        "rgba(0,0,0,0.45)";  
 
 
-        ctx.fillStyle = "white";
-
-        ctx.font =
-            "bold 70px Arial";
-
-        ctx.textAlign = "center";
-
-        ctx.textBaseline = "middle";
+    ctx.fillRect(  
+        0,  
+        0,  
+        canvas.width,  
+        canvas.height  
+    );  
 
 
-        if (count > 0) {
+    ctx.fillStyle = "white";  
 
-            ctx.fillText(
-                count,
-                canvas.width / 2,
-                canvas.height / 2
-            );
+    ctx.font =  
+        "bold 70px Arial";  
 
+    ctx.textAlign = "center";  
 
-            count--;
-
-        }
-
-        else {
-
-            ctx.fillText(
-                "GO!",
-                canvas.width / 2,
-                canvas.height / 2
-            );
+    ctx.textBaseline = "middle";  
 
 
-            playSound(letsGoSound);
+    if (count > 0) {  
+
+        ctx.fillText(  
+            count,  
+            canvas.width / 2,  
+            canvas.height / 2  
+        );  
 
 
-            countingDown = false;
+        count--;  
+
+    }  
+
+    else {  
+
+        ctx.fillText(  
+            "GO!",  
+            canvas.width / 2,  
+            canvas.height / 2  
+        );  
 
 
-            clearInterval(
-                countdownTimer
-            );
+        playSound(letsGoSound);  
 
 
-            countdownTimer = null;
+        countingDown = false;  
 
 
-            restartTimer();
-
-            startSpecialFoodTimer();
-
-        }
-
-    }
+        clearInterval(  
+            countdownTimer  
+        );  
 
 
-    showCountdown();
+        countdownTimer = null;  
 
 
-    countdownTimer =
-        setInterval(
-            showCountdown,
-            1000
-        );
+        restartTimer();  
+
+        startSpecialFoodTimer();  
+
+    }  
+
+}  
+
+
+showCountdown();  
+
+
+countdownTimer =  
+    setInterval(  
+        showCountdown,  
+        1000  
+    );
 
 }
-
 
 // ==========================
 // UPDATE DISPLAY
@@ -1356,38 +1295,37 @@ function startCountdown() {
 
 function updateDisplay() {
 
-    scoreText.textContent =
-        score;
+scoreText.textContent =  
+    score;  
 
 
-    highScoreText.textContent =
-        highScore;
+highScoreText.textContent =  
+    highScore;  
 
 
-    coinsText.textContent =
-        coins;
+coinsText.textContent =  
+    coins;  
 
 
-    levelText.textContent =
-        level;
+levelText.textContent =  
+    level;  
 
 
-    missionText.textContent =
-        "Eat " +
-        missionTarget +
-        " foods";
+missionText.textContent =  
+    "Eat " +  
+    missionTarget +  
+    " foods";  
 
 
-    missionProgressText.textContent =
-        missionProgress +
-        " / " +
-        missionTarget;
+missionProgressText.textContent =  
+    missionProgress +  
+    " / " +  
+    missionTarget;  
 
 
-    updateAchievements();
+updateAchievements();
 
 }
-
 
 // ==========================
 // ACHIEVEMENTS
@@ -1395,68 +1333,67 @@ function updateDisplay() {
 
 function updateAchievements() {
 
-    achievementList.innerHTML = "";
+achievementList.innerHTML = "";  
 
 
-    var achievements = [];
+var achievements = [];  
 
 
-    if (score >= 10) {
+if (score >= 10) {  
 
-        achievements.push(
-            "🍎 First 10 Points"
-        );
+    achievements.push(  
+        "🍎 First 10 Points"  
+    );  
 
-    }
-
-
-    if (coins >= 10) {
-
-        achievements.push(
-            "🪙 Coin Collector"
-        );
-
-    }
+}  
 
 
-    if (level >= 5) {
+if (coins >= 10) {  
 
-        achievements.push(
-            "🚀 Level 5"
-        );
+    achievements.push(  
+        "🪙 Coin Collector"  
+    );  
 
-    }
-
-
-    if (score >= 50) {
-
-        achievements.push(
-            "🏆 50 Points"
-        );
-
-    }
+}  
 
 
-    for (
-        var i = 0;
-        i < achievements.length;
-        i++
-    ) {
+if (level >= 5) {  
 
-        var li =
-            document.createElement("li");
+    achievements.push(  
+        "🚀 Level 5"  
+    );  
 
-
-        li.textContent =
-            achievements[i];
+}  
 
 
-        achievementList.appendChild(li);
+if (score >= 50) {  
 
-    }
+    achievements.push(  
+        "🏆 50 Points"  
+    );  
+
+}  
+
+
+for (  
+    var i = 0;  
+    i < achievements.length;  
+    i++  
+) {  
+
+    var li =  
+        document.createElement("li");  
+
+
+    li.textContent =  
+        achievements[i];  
+
+
+    achievementList.appendChild(li);  
 
 }
 
+}
 
 // ==========================
 // START GAME
@@ -1464,67 +1401,67 @@ function updateAchievements() {
 
 function startGame() {
 
-    clearInterval(gameTimer);
+clearInterval(gameTimer);  
 
-    clearInterval(countdownTimer);
+clearInterval(countdownTimer);  
 
-    stopSpecialFoodTimer();
-    stopAllSounds();
-    unlockAudio();
+stopSpecialFoodTimer();  
 
-    score = 0;
-
-    coins = 0;
-
-    level = 1;
-
-    missionProgress = 0;
-
-    missionTarget = 10;
+stopAllSounds();  
 
 
-    direction = "right";
+score = 0;  
 
-    nextDirection = "right";
+coins = 0;  
 
+level = 1;  
 
-    gameOver = false;
+missionProgress = 0;  
 
-    paused = false;
-
-    countingDown = false;
-
-
-    achievedNewHighScore = false;
+missionTarget = 10;  
 
 
-    createSnake();
+direction = "right";  
 
-    createFood();
-
-    createCoin();
-
-    createObstacles();
+nextDirection = "right";  
 
 
-    startScreen.style.display =
-        "none";
+gameOver = false;  
+
+paused = false;  
+
+countingDown = false;  
 
 
-    gameScreen.style.display =
-        "block";
+achievedNewHighScore = false;  
 
 
-    gameOverMenu.style.display =
-        "none";
+createSnake();  
+
+createFood();  
+
+createCoin();  
+
+createObstacles();  
 
 
-    updateDisplay();
+startScreen.style.display =  
+    "none";  
 
-    draw();
+
+gameScreen.style.display =  
+    "block";  
+
+
+gameOverMenu.style.display =  
+    "none";  
+
+
+updateDisplay();  
+
+draw();
 
 }
-
 
 // ==========================
 // RESTART GAME
@@ -1532,67 +1469,66 @@ function startGame() {
 
 function restartGame() {
 
-    clearInterval(gameTimer);
+clearInterval(gameTimer);  
 
-    clearInterval(countdownTimer);
+clearInterval(countdownTimer);  
 
-    stopSpecialFoodTimer();
+stopSpecialFoodTimer();  
 
-    stopAllSounds();
-
-
-    score = 0;
-
-    coins = 0;
-
-    level = 1;
-
-    missionProgress = 0;
-
-    missionTarget = 10;
+stopAllSounds();  
 
 
-    direction = "right";
+score = 0;  
 
-    nextDirection = "right";
+coins = 0;  
 
+level = 1;  
 
-    gameOver = false;
+missionProgress = 0;  
 
-    paused = false;
-
-    countingDown = false;
-
-
-    achievedNewHighScore = false;
+missionTarget = 10;  
 
 
-    createSnake();
+direction = "right";  
 
-    createFood();
-
-    createCoin();
-
-    createObstacles();
+nextDirection = "right";  
 
 
-    gameOverMenu.style.display =
-        "none";
+gameOver = false;  
+
+paused = false;  
+
+countingDown = false;  
 
 
-    gameScreen.style.display =
-        "block";
+achievedNewHighScore = false;  
 
 
-    updateDisplay();
+createSnake();  
 
-    draw();
+createFood();  
+
+createCoin();  
+
+createObstacles();  
 
 
-    startCountdown();
+gameOverMenu.style.display =  
+    "none";  
+
+
+gameScreen.style.display =  
+    "block";  
+
+
+updateDisplay();  
+
+draw();  
+
+
+startCountdown();
 
 }
-
 
 // ==========================
 // GAME OVER
@@ -1600,414 +1536,405 @@ function restartGame() {
 
 function endGame() {
 
-    if (gameOver) {
+if (gameOver) {  
 
-        return;
+    return;  
 
-    }
-
-
-    // ==========================
-    // STOP GAME
-    // ==========================
-
-    gameOver = true;
-
-    paused = false;
-
-    countingDown = false;
+}  
 
 
-    clearInterval(gameTimer);
+// ==========================  
+// STOP GAME  
+// ==========================  
 
-    clearInterval(countdownTimer);
+gameOver = true;  
 
+paused = false;  
 
-    gameTimer = null;
-
-    countdownTimer = null;
-
-
-    stopSpecialFoodTimer();
+countingDown = false;  
 
 
-    // ==========================
-    // STOP OTHER SOUNDS
-    // ==========================
+clearInterval(gameTimer);  
 
-    try {
-
-        letsGoSound.pause();
-        letsGoSound.currentTime = 0;
-
-        yummySound.pause();
-        yummySound.currentTime = 0;
-
-        newHighScoreSound.pause();
-        newHighScoreSound.currentTime = 0;
-
-    } catch (error) {
-
-        console.log(error);
-
-    }
+clearInterval(countdownTimer);  
 
 
-    // ==========================
-    // PLAY GAME OVER SOUND
-    // ==========================
+gameTimer = null;  
 
-    if (soundOn) {
-
-        try {
-
-            gameOverSound.pause();
-
-            gameOverSound.currentTime = 0;
-
-            gameOverSound.play()
-                .then(function() {
-
-                    console.log(
-                        "Game Over sound played"
-                    );
-
-                })
-                .catch(function(error) {
-
-                    console.log(
-                        "Game Over sound blocked:",
-                        error
-                    );
-
-                });
-
-        } catch (error) {
-
-            console.log(
-                "Game Over sound error:",
-                error
-            );
-
-        }
-
-    }
+countdownTimer = null;  
 
 
-    // ==========================
-    // FINAL SCORE
-    // ==========================
-
-    finalScore.textContent =
-        score;
+stopSpecialFoodTimer();  
 
 
-    finalHighScore.textContent =
-        highScore;
+// ==========================  
+// STOP OTHER SOUNDS  
+// ==========================  
+
+try {  
+
+    letsGoSound.pause();  
+    letsGoSound.currentTime = 0;  
+
+    yummySound.pause();  
+    yummySound.currentTime = 0;  
+
+    newHighScoreSound.pause();  
+    newHighScoreSound.currentTime = 0;  
+
+} catch (error) {  
+
+    console.log(error);  
+
+}  
 
 
-    // ==========================
-    // HIGH SCORE MESSAGE
-    // ==========================
+// ==========================  
+// PLAY GAME OVER SOUND  
+// ==========================  
 
-    if (achievedNewHighScore) {
+if (soundOn) {  
 
-        highScoreMessage.textContent =
-            "🏆 NEW HIGH SCORE! 🏆";
+    try {  
 
-        highScoreMessage.style.display =
-            "block";
+        gameOverSound.pause();  
 
-    }
+        gameOverSound.currentTime = 0;  
 
-    else {
+        gameOverSound.play()  
+            .then(function() {  
 
-        highScoreMessage.textContent =
-            "";
+                console.log(  
+                    "Game Over sound played"  
+                );  
 
-        highScoreMessage.style.display =
-            "none";
+            })  
+            .catch(function(error) {  
 
-    }
+                console.log(  
+                    "Game Over sound blocked:",  
+                    error  
+                );  
+
+            });  
+
+    } catch (error) {  
+
+        console.log(  
+            "Game Over sound error:",  
+            error  
+        );  
+
+    }  
+
+}  
 
 
-    // ==========================
-    // HIDE GAME SCREEN
-    // ==========================
+// ==========================  
+// FINAL SCORE  
+// ==========================  
 
-    gameScreen.style.display =
-        "none";
+finalScore.textContent =  
+    score;  
 
 
-    // ==========================
-    // SHOW GAME OVER SCREEN
-    // ==========================
+finalHighScore.textContent =  
+    highScore;  
 
-    gameOverMenu.style.display =
-        "block";
+
+// ==========================  
+// HIGH SCORE MESSAGE  
+// ==========================  
+
+if (achievedNewHighScore) {  
+
+    highScoreMessage.textContent =  
+        "🏆 NEW HIGH SCORE! 🏆";  
+
+    highScoreMessage.style.display =  
+        "block";  
+
+}  
+
+else {  
+
+    highScoreMessage.textContent =  
+        "";  
+
+    highScoreMessage.style.display =  
+        "none";  
+
+}  
+
+
+// ==========================  
+// HIDE GAME SCREEN  
+// ==========================  
+
+gameScreen.style.display =  
+    "none";  
+
+
+// ==========================  
+// SHOW GAME OVER SCREEN  
+// ==========================  
+
+gameOverMenu.style.display =  
+    "block";
 
 }
-
 
 // ==========================
 // PLAY GAME BUTTON
 // ==========================
 
 document
-    .getElementById("playGame")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("playGame")
+.addEventListener(
+"click",
+function() {
 
-            startGame();
+startGame();  
 
-            startCountdown();
+        startCountdown();  
 
-        }
-    );
-
+    }  
+);
 
 // ==========================
 // START BUTTON
 // ==========================
 
 document
-    .getElementById("start")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("start")
+.addEventListener(
+"click",
+function() {
 
-            if (
-                !gameOver &&
-                !countingDown
-            ) {
+if (  
+            !gameOver &&  
+            !countingDown  
+        ) {  
 
-                startCountdown();
+            startCountdown();  
 
-            }
+        }  
 
-        }
-    );
-
+    }  
+);
 
 // ==========================
 // PAUSE BUTTON
 // ==========================
 
 document
-    .getElementById("pause")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("pause")
+.addEventListener(
+"click",
+function() {
 
-            if (
-                gameOver ||
-                countingDown
-            ) {
+if (  
+            gameOver ||  
+            countingDown  
+        ) {  
 
-                return;
+            return;  
 
-            }
-
-
-            paused = !paused;
+        }  
 
 
-            if (paused) {
+        paused = !paused;  
 
-                clearInterval(
-                    gameTimer
-                );
 
-            }
+        if (paused) {  
 
-            else {
+            clearInterval(  
+                gameTimer  
+            );  
 
-                restartTimer();
+        }  
 
-            }
+        else {  
 
-        }
-    );
+            restartTimer();  
 
+        }  
+
+    }  
+);
 
 // ==========================
 // RESTART BUTTON
 // ==========================
 
 document
-    .getElementById("restart")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("restart")
+.addEventListener(
+"click",
+function() {
 
-            restartGame();
+restartGame();  
 
-        }
-    );
-
+    }  
+);
 
 // ==========================
 // SOUND BUTTON
 // ==========================
 
 document
-    .getElementById("sound")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("sound")
+.addEventListener(
+"click",
+function() {
 
-            soundOn = !soundOn;
+soundOn = !soundOn;  
 
 
-            this.textContent =
-                soundOn
-                    ? "🔊 Sound"
-                    : "🔇 Sound";
+        this.textContent =  
+            soundOn  
+                ? "🔊 Sound"  
+                : "🔇 Sound";  
 
-        }
-    );
-
+    }  
+);
 
 // ==========================
 // CLEAR HIGH SCORE
 // ==========================
 
 document
-    .getElementById("clearHighScore")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("clearHighScore")
+.addEventListener(
+"click",
+function() {
 
-            var answer =
-                confirm(
-                    "Clear high score?"
-                );
-
-
-            if (answer) {
-
-                highScore = 0;
+var answer =  
+            confirm(  
+                "Clear high score?"  
+            );  
 
 
-                localStorage.removeItem(
-                    "stanguruHighScore"
-                );
+        if (answer) {  
+
+            highScore = 0;  
 
 
-                updateDisplay();
+            localStorage.removeItem(  
+                "stanguruHighScore"  
+            );  
 
 
-                alert(
-                    "High score cleared!"
-                );
+            updateDisplay();  
 
-            }
 
-        }
-    );
+            alert(  
+                "High score cleared!"  
+            );  
 
+        }  
+
+    }  
+);
 
 // ==========================
 // PLAY AGAIN
 // ==========================
 
 document
-    .getElementById("playAgain")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("playAgain")
+.addEventListener(
+"click",
+function() {
 
-            restartGame();
+restartGame();  
 
-        }
-    );
-
+    }  
+);
 
 // ==========================
 // MAIN MENU
 // ==========================
 
 document
-    .getElementById("mainMenu")
-    .addEventListener(
-        "click",
-        function() {
+.getElementById("mainMenu")
+.addEventListener(
+"click",
+function() {
 
-            clearInterval(gameTimer);
+clearInterval(gameTimer);  
 
-            clearInterval(countdownTimer);
+        clearInterval(countdownTimer);  
 
-            stopSpecialFoodTimer();
+        stopSpecialFoodTimer();  
 
-            stopAllSounds();
-
-
-            gameOver = false;
+        stopAllSounds();  
 
 
-            gameOverMenu.style.display =
-                "none";
+        gameOver = false;  
 
 
-            gameScreen.style.display =
-                "none";
+        gameOverMenu.style.display =  
+            "none";  
 
 
-            startScreen.style.display =
-                "block";
+        gameScreen.style.display =  
+            "none";  
 
-        }
-    );
 
+        startScreen.style.display =  
+            "block";  
+
+    }  
+);
 
 // ==========================
 // KEYBOARD CONTROLS
 // ==========================
 
 document.addEventListener(
-    "keydown",
-    function(event) {
+"keydown",
+function(event) {
 
-        if (
-            event.key === "ArrowUp" &&
-            direction !== "down"
-        ) {
+if (  
+        event.key === "ArrowUp" &&  
+        direction !== "down"  
+    ) {  
 
-            nextDirection = "up";
+        nextDirection = "up";  
 
-        }
+    }  
 
-        else if (
-            event.key === "ArrowDown" &&
-            direction !== "up"
-        ) {
+    else if (  
+        event.key === "ArrowDown" &&  
+        direction !== "up"  
+    ) {  
 
-            nextDirection = "down";
+        nextDirection = "down";  
 
-        }
+    }  
 
-        else if (
-            event.key === "ArrowLeft" &&
-            direction !== "right"
-        ) {
+    else if (  
+        event.key === "ArrowLeft" &&  
+        direction !== "right"  
+    ) {  
 
-            nextDirection = "left";
+        nextDirection = "left";  
 
-        }
+    }  
 
-        else if (
-            event.key === "ArrowRight" &&
-            direction !== "left"
-        ) {
+    else if (  
+        event.key === "ArrowRight" &&  
+        direction !== "left"  
+    ) {  
 
-            nextDirection = "right";
+        nextDirection = "right";  
 
-        }
+    }  
 
-    }
+}
+
 );
-
 
 // ==========================
 // SWIPE CONTROLS
@@ -2016,110 +1943,107 @@ document.addEventListener(
 var touchStartX = 0;
 var touchStartY = 0;
 
-
 canvas.addEventListener(
-    "touchstart",
-    function(event) {
+"touchstart",
+function(event) {
 
-        var touch =
-            event.touches[0];
-
-
-        touchStartX =
-            touch.clientX;
+var touch =  
+        event.touches[0];  
 
 
-        touchStartY =
-            touch.clientY;
+    touchStartX =  
+        touch.clientX;  
 
-    }
+
+    touchStartY =  
+        touch.clientY;  
+
+}
+
 );
 
-
 canvas.addEventListener(
-    "touchend",
-    function(event) {
+"touchend",
+function(event) {
 
-        var touch =
-            event.changedTouches[0];
-
-
-        var dx =
-            touch.clientX -
-            touchStartX;
+var touch =  
+        event.changedTouches[0];  
 
 
-        var dy =
-            touch.clientY -
-            touchStartY;
+    var dx =  
+        touch.clientX -  
+        touchStartX;  
 
 
-        if (
-            Math.abs(dx) >
-            Math.abs(dy)
-        ) {
+    var dy =  
+        touch.clientY -  
+        touchStartY;  
 
-            if (
-                dx > 0 &&
-                direction !== "left"
-            ) {
 
-                nextDirection =
-                    "right";
+    if (  
+        Math.abs(dx) >  
+        Math.abs(dy)  
+    ) {  
 
-            }
+        if (  
+            dx > 0 &&  
+            direction !== "left"  
+        ) {  
 
-            else if (
-                dx < 0 &&
-                direction !== "right"
-            ) {
+            nextDirection =  
+                "right";  
 
-                nextDirection =
-                    "left";
+        }  
 
-            }
+        else if (  
+            dx < 0 &&  
+            direction !== "right"  
+        ) {  
 
-        }
+            nextDirection =  
+                "left";  
 
-        else {
+        }  
 
-            if (
-                dy > 0 &&
-                direction !== "up"
-            ) {
+    }  
 
-                nextDirection =
-                    "down";
+    else {  
 
-            }
+        if (  
+            dy > 0 &&  
+            direction !== "up"  
+        ) {  
 
-            else if (
-                dy < 0 &&
-                direction !== "down"
-            ) {
+            nextDirection =  
+                "down";  
 
-                nextDirection =
-                    "up";
+        }  
 
-            }
+        else if (  
+            dy < 0 &&  
+            direction !== "down"  
+        ) {  
 
-        }
+            nextDirection =  
+                "up";  
 
-    }
+        }  
+
+    }  
+
+}
+
 );
-
 
 // ==========================
 // INITIAL STATE
 // ==========================
 
 highScoreText.textContent =
-    highScore;
-
+highScore;
 
 gameScreen.style.display =
-    "none";
-
+"none";
 
 gameOverMenu.style.display =
-    "none";
+"none";
