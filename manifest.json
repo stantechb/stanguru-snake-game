@@ -2,7 +2,7 @@
   "name": "STANGURU SNAKE GAME",
   "short_name": "STANGURU SNAKE",
   "description": "A fun classic snake game by STANGURU",
-  "start_url": "stanguru.html",
+  "start_url": "index.html",
   "display": "standalone",
   "background_color": "#061a12",
   "theme_color": "#00ff88",
