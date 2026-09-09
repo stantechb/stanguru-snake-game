@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>STANGURU SNAKE GAME</title>
+<link rel="manifest" href="manifest.json">
+
+</head>
+
+<body style="
+margin:0;
+padding:5px;
+background:linear-gradient(135deg,#061a12,#0b3d2e,#061a12);
+font-family:Arial,sans-serif;
+text-align:center;
+color:white;
+">
+
+<!-- MAIN CONTAINER -->
+
+<div style="
+width:100%;
+max-width:430px;
+margin:auto;
+background:linear-gradient(180deg,#102820,#071812);
+border:3px solid #20e080;
+border-radius:16px;
+padding:6px;
+box-sizing:border-box;
+box-shadow:0 0 20px rgba(32,224,128,0.35);
+">
+
+<!-- START SCREEN -->
+
+<div id="startScreen" style="
+display:block;
+padding:25px 5px;
+">
+
+<h1 style="
+margin:4px 0;
+font-size:28px;
+color:#20e080;
+text-shadow:0 0 10px rgba(32,224,128,0.7);
+">
+🐍 STANGURU
+</h1>
+
+<h2 style="
+margin:0 0 8px;
+font-size:21px;
+color:#ffd54a;
+">
+SNAKE GAME
+</h2>
+
+<p style="
+font-size:13px;
+font-weight:bold;
+color:#d7fff0;
+margin-bottom:20px;
+">
+Created by Stantech Guru
+</p>
+
+<button id="playGame" style="
+padding:13px 32px;
+font-size:18px;
+font-weight:bold;
+border:none;
+border-radius:9px;
+background:linear-gradient(135deg,#20e080,#0aaa62);
+color:white;
+box-shadow:0 4px 12px rgba(32,224,128,0.3);
+">
+▶ PLAY GAME
+</button>
+
+</div>
+
+
+<!-- GAME SCREEN -->
+
+<div id="gameScreen" style="display:none;">
+
+<!-- TITLE -->
+
+<h2 style="
+margin:2px 0 4px;
+font-size:20px;
+color:#20e080;
+text-shadow:0 0 7px rgba(32,224,128,0.6);
+">
+🐍 STANGURU SNAKE GAME
+</h2>
+
+
+<!-- SCORE ROW -->
+
+<div style="
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:3px;
+margin-bottom:3px;
+">
+
+<div style="
+background:#123d2d;
+border:1px solid #20e080;
+border-radius:6px;
+padding:3px 1px;
+">
+
+<div style="font-size:7px;color:#8fffc5;">
+SCORE
+</div>
+
+<div id="score" style="
+font-size:12px;
+font-weight:bold;
+color:#20e080;
+">
+0
+</div>
+
+</div>
+
+
+<div style="
+background:#3d3210;
+border:1px solid #ffd54a;
+border-radius:6px;
+padding:3px 1px;
+">
+
+<div style="font-size:7px;color:#ffe999;">
+HIGH
+</div>
+
+<div id="highScore" style="
+font-size:12px;
+font-weight:bold;
+color:#ffd54a;
+">
+0
+</div>
+
+</div>
+
+
+<div style="
+background:#33250a;
+border:1px solid #ffb52e;
+border-radius:6px;
+padding:3px 1px;
+">
+
+<div style="font-size:7px;color:#ffd98a;">
+COINS
+</div>
+
+<div style="
+font-size:12px;
+font-weight:bold;
+color:#ffb52e;
+">
+🪙 <span id="coins">0</span>
+</div>
+
+</div>
+
+
+<div style="
+background:#182d4b;
+border:1px solid #4da6ff;
+border-radius:6px;
+padding:3px 1px;
+">
+
+<div style="font-size:7px;color:#a8d7ff;">
+LEVEL
+</div>
+
+<div id="level" style="
+font-size:12px;
+font-weight:bold;
+color:#4da6ff;
+">
+1
+</div>
+
+</div>
+
+</div>
+
+
+<!-- LIVES -->
+
+<div style="
+background:#3b1018;
+border:1px solid #ff4d63;
+border-radius:6px;
+padding:2px;
+margin-bottom:3px;
+line-height:13px;
+">
+
+<span style="
+font-size:9px;
+font-weight:bold;
+color:#ff8292;
+">
+
+</div>
+
+
+<!-- MISSION -->
+
+<div style="
+background:linear-gradient(135deg,#40260b,#5b350c);
+border:1px solid #ffad32;
+border-radius:6px;
+padding:3px;
+margin-bottom:3px;
+line-height:12px;
+">
+
+<span style="
+font-size:9px;
+font-weight:bold;
+color:#ffd166;
+">
+🎯 MISSION:
+</span>
+
+<span id="missionText" style="
+font-size:9px;
+color:#fff2c7;
+">
+Eat 10 foods
+</span>
+
+<span id="missionProgress" style="
+font-size:9px;
+font-weight:bold;
+color:#ffca58;
+margin-left:5px;
+">
+0 / 10
+</span>
+
+</div>
+
+
+<!-- ACHIEVEMENTS -->
+
+<div style="
+background:linear-gradient(135deg,#24133f,#35185c);
+border:1px solid #b66cff;
+border-radius:6px;
+padding:3px;
+margin-bottom:3px;
+">
+
+<span style="
+font-size:9px;
+font-weight:bold;
+color:#d49aff;
+">
+🏅 ACHIEVEMENTS:
+</span>
+
+<ul id="achievementList" style="
+display:inline-block;
+vertical-align:middle;
+margin:0;
+padding-left:15px;
+text-align:left;
+font-size:8px;
+color:#ead7ff;
+">
+</ul>
+
+</div>
+
+
+<!-- SNAKE GAME AREA -->
+
+<canvas
+id="canvas"
+width="400"
+height="400"
+style="
+display:block;
+width:100%;
+max-width:400px;
+height:auto;
+margin:3px auto;
+border:3px solid #20e080;
+border-radius:9px;
+background:#07130f;
+box-shadow:
+0 0 10px rgba(32,224,128,0.35),
+inset 0 0 15px rgba(0,0,0,0.8);
+touch-action:none;
+">
+</canvas>
+
+
+<!-- BUTTONS -->
+
+<div style="
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:4px;
+margin-top:3px;
+">
+
+<button id="start" style="
+padding:6px 8px;
+font-size:9px;
+font-weight:bold;
+border:none;
+border-radius:6px;
+background:#20e080;
+color:#062015;
+">
+▶ Start
+</button>
+
+<button id="pause" style="
+padding:6px 8px;
+font-size:9px;
+font-weight:bold;
+border:none;
+border-radius:6px;
+background:#4da6ff;
+color:white;
+">
+⏸ Pause
+</button>
+
+<button id="restart" style="
+padding:6px 8px;
+font-size:9px;
+font-weight:bold;
+border:none;
+border-radius:6px;
+background:#ff9f43;
+color:#241400;
+">
+🔄 Restart
+</button>
+
+<button id="sound" style="
+padding:6px 8px;
+font-size:9px;
+font-weight:bold;
+border:none;
+border-radius:6px;
+background:#b66cff;
+color:white;
+">
+🔊 Sound
+</button>
+
+<button id="clearHighScore" style="
+padding:6px 8px;
+font-size:9px;
+font-weight:bold;
+border:none;
+border-radius:6px;
+background:#ff4d63;
+color:white;
+">
+🗑 Clear High Score
+</button>
+
+</div>
+
+</div>
+
+
+<!-- GAME OVER -->
+
+<div id="gameOverMenu" style="
+display:none;
+padding:20px 5px;
+">
+
+<h2 style="
+color:#ff4d63;
+font-size:28px;
+margin:4px 0 12px;
+text-shadow:0 0 10px rgba(255,77,99,0.5);
+">
+💀 GAME OVER
+</h2>
+
+<div id="highScoreMessage" style="
+display:none;
+font-size:20px;
+font-weight:bold;
+color:#ffd54a;
+margin:7px 0 15px;
+">
+</div>
+
+<div style="
+background:#123d2d;
+border:1px solid #20e080;
+border-radius:8px;
+padding:8px;
+margin:6px 0;
+">
+
+<p style="
+font-size:14px;
+font-weight:bold;
+margin:0;
+color:#aaffd3;
+">
+Final Score:
+<span id="finalScore" style="color:#20e080;">
+0
+</span>
+</p>
+
+</div>
+
+<div style="
+background:#3d3210;
+border:1px solid #ffd54a;
+border-radius:8px;
+padding:8px;
+margin:6px 0;
+">
+
+<p style="
+font-size:14px;
+font-weight:bold;
+margin:0;
+color:#fff0a8;
+">
+High Score:
+<span id="finalHighScore" style="color:#ffd54a;">
+0
+</span>
+</p>
+
+</div>
+
+<div style="
+display:flex;
+flex-direction:column;
+gap:7px;
+max-width:210px;
+margin:15px auto 0;
+">
+
+<button id="playAgain" style="
+padding:10px;
+font-size:14px;
+font-weight:bold;
+background:linear-gradient(135deg,#20e080,#0aaa62);
+color:white;
+border:none;
+border-radius:7px;
+">
+▶ PLAY AGAIN
+</button>
+
+<button id="mainMenu" style="
+padding:10px;
+font-size:14px;
+font-weight:bold;
+background:#202b27;
+color:#d7fff0;
+border:1px solid #60756c;
+border-radius:7px;
+">
+🏠 MAIN MENU
+</button>
+
+</div>
+
+</div>
+
+
+<!-- CREATOR -->
+
+<div style="
+margin-top:4px;
+padding-top:4px;
+border-top:1px solid #285447;
+">
+
+<div style="
+font-size:9px;
+color:#8caea1;
+">
+Created & Developed by
+</div>
+
+<div style="
+font-size:11px;
+font-weight:bold;
+color:#20e080;
+text-shadow:0 0 6px rgba(32,224,128,0.4);
+">
+STANGURU
+</div>
+
+</div>
+
+</div>
+
+
+<script src="stanguru.js"></script>
+
+</body>
+</html>

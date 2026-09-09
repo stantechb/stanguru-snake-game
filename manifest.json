@@ -1,0 +1,22 @@
+{
+  "name": "STANGURU SNAKE GAME",
+  "short_name": "STANGURU SNAKE",
+  "description": "A fun classic snake game by STANGURU",
+  "start_url": "stanguru.html",
+  "display": "standalone",
+  "background_color": "#061a12",
+  "theme_color": "#00ff88",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
