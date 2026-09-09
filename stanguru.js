@@ -1483,10 +1483,8 @@ function startGame() {
     clearInterval(countdownTimer);
 
     stopSpecialFoodTimer();
-    unlockAudio();
-
     stopAllSounds();
-
+    unlockAudio();
 
     score = 0;
 
