@@ -83,57 +83,43 @@ newHighScoreSound.preload = "auto";
 gameOverSound.preload = "auto";
 
 
-// ==========================
+// // ==========================
 // UNLOCK AUDIO FOR BROWSER
 // ==========================
 
 function unlockAudio() {
 
-    var sounds = [
-        letsGoSound,
-        yummySound,
-        newHighScoreSound,
-        gameOverSound
-    ];
+    try {
 
-    for (var i = 0; i < sounds.length; i++) {
+        letsGoSound.muted = true;
 
-        try {
+        var audioPromise = letsGoSound.play();
 
-            sounds[i].muted = true;
+        if (audioPromise !== undefined) {
 
-            var audioPromise = sounds[i].play();
+            audioPromise.then(function() {
 
-            if (audioPromise !== undefined) {
+                letsGoSound.pause();
 
-                audioPromise.then(function() {
+                letsGoSound.currentTime = 0;
 
-                    for (var j = 0; j < sounds.length; j++) {
+                letsGoSound.muted = false;
 
-                        sounds[j].pause();
+            }).catch(function(error) {
 
-                        sounds[j].currentTime = 0;
+                console.log("Audio unlock:", error);
 
-                        sounds[j].muted = false;
-
-                    }
-
-                }).catch(function(error) {
-
-                    console.log("Audio unlock:", error);
-
-                });
-
-            }
-
-        } catch (error) {
-
-            console.log("Audio unlock error:", error);
+            });
 
         }
 
+    } catch (error) {
+
+        console.log("Audio unlock error:", error);
+
     }
 
+}
 }
 
 
