@@ -84,6 +84,60 @@ gameOverSound.preload = "auto";
 
 
 // ==========================
+// UNLOCK AUDIO FOR BROWSER
+// ==========================
+
+function unlockAudio() {
+
+    var sounds = [
+        letsGoSound,
+        yummySound,
+        newHighScoreSound,
+        gameOverSound
+    ];
+
+    for (var i = 0; i < sounds.length; i++) {
+
+        try {
+
+            sounds[i].muted = true;
+
+            var audioPromise = sounds[i].play();
+
+            if (audioPromise !== undefined) {
+
+                audioPromise.then(function() {
+
+                    for (var j = 0; j < sounds.length; j++) {
+
+                        sounds[j].pause();
+
+                        sounds[j].currentTime = 0;
+
+                        sounds[j].muted = false;
+
+                    }
+
+                }).catch(function(error) {
+
+                    console.log("Audio unlock:", error);
+
+                });
+
+            }
+
+        } catch (error) {
+
+            console.log("Audio unlock error:", error);
+
+        }
+
+    }
+
+}
+
+
+// ==========================
 // HTML ELEMENTS
 // ==========================
 
@@ -1429,6 +1483,7 @@ function startGame() {
     clearInterval(countdownTimer);
 
     stopSpecialFoodTimer();
+    unlockAudio();
 
     stopAllSounds();
 
